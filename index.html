@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Учеба на 5+ | Твой личный помощник</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
 </head>
 <body>
     <!-- Экран ввода ключа -->
@@ -136,5 +137,27 @@
 
     <script src="script.js"></script>
     <script src="equation-solver.js"></script>
+    
+    <!-- Service Worker для оффлайн-работы -->
+    <script>
+        // Регистрируем Service Worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(registration => console.log('SW registered ✅', registration))
+                .catch(error => console.log('SW registration failed ❌', error));
+        }
+
+        // Проверка оффлайн-режима
+        window.addEventListener('load', function() {
+            if (!navigator.onLine) {
+                console.log('📶 Оффлайн режим');
+                // Можно добавить уведомление для пользователя
+                if (document.getElementById('keyMessage')) {
+                    document.getElementById('keyMessage').innerHTML = 
+                        '📶 Оффлайн режим. Для активации нужен интернет';
+                }
+            }
+        });
+    </script>
 </body>
-  </html>
+</html>
